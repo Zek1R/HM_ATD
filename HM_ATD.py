@@ -30,11 +30,15 @@ class ATD:
     
 
     def arr_add(self):
+        
         value = input("Введите значение > ")
         for x in value:
             if not x in ['1','2','3','4','5','6','7','8','9','0','.',',']:
-                return print(f"TypeError. Your value >{x}< is not a {self.type_table[self.code_type]} type")
+                print(f"TypeError. Your value >{x}< is not a {self.type_table[self.code_type]} type")   
+                sleep(0.2)
+                return 
         
+
         if ('.' in value) or (',' in value):
             value = float(value)
         else:
@@ -45,11 +49,18 @@ class ATD:
         if str(type(value)).split("'")[1] == self.type_table[self.code_type]:
             self.current_index += 1 
             self.arr.append(value)
+            
         else:
-            return print(f"TypeError. Your value >{value}< is not a {self.type_table[self.code_type]} type")
+            print(f"TypeError. Your value >{value}< is not a {self.type_table[self.code_type]} type")
+            sleep(0.5)
+            return 
             
         
     def arr_pop(self):
+        if len(self.arr) == 0:
+            print("Массив пустой")
+            sleep(0.5)
+            return
         x = self.arr.pop(0)
         return x
     
@@ -59,6 +70,7 @@ class ATD:
 
 
     def arr_print(self):
+        system('cls')
         print("name:", self.name)
         data = '['
         for x in self.arr:
@@ -107,10 +119,11 @@ class App:
         self.arrays = []
     
     def make_array(self):
+        system('cls')
         name = input("Введите имя нового массива > ")
         t = False
         while not t:
-            code_type = input("Input array DataType\n[i] - integer\n[f] - float\n> ")
+            code_type = input("\n[i] - integer\n[f] - float\n\nInput array DataType > ")
             if code_type == 'i' or code_type == 'f':
                 print(f"Массив {name} создан")
                 t = True
@@ -121,10 +134,10 @@ class App:
     
 
     def edit_atd(self):
+        #print(len(self.arrays))
         t = True
-        print(len(self.arrays))
         while t:
-            self.print_atds()
+            self.print_atd()
             num = input("Введите номер массива (0 - Отменить ввод)\n> ")
             if num == '0':
                 return system('cls')
@@ -150,16 +163,18 @@ class App:
             e = self.arrays[num].comands()
             
 
-    def print_atds(self):
+    def print_atd(self):
         if len(self.arrays) != 0:
             for x in range(len(self.arrays)):
                 print(f'[{x+1}] - {self.arrays[x].get_info()}')
         else:
             print("Не создано ни одного массива.")
+        print('-'*len("Не создано ни одного массива."))
 
 
     def comand(self):
-        self.print_atds()
+        system('cls')
+        self.print_atd()
 
         print("\n[1] - Создать новый массив\n[2] - Редактировать массив\n[0] - Выход из программы\n")
         cmnd = input("Введите команду > ")
